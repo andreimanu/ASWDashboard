@@ -1,4 +1,4 @@
-package com.example;
+package es.uniovi.asw.com.example;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

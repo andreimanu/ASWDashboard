@@ -1,15 +1,18 @@
-package model;
+package es.uniovi.asw.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import model.CFiltrable;
+import es.uniovi.asw.model.filtrable.CFiltrable;
 
 public class Comment extends CFiltrable implements Removable{
 
 	
 	private Proposal proposal;
 	
+	public Comment() {
+		
+	}
 	
 	public Comment(User user, Proposal proposal, String text){
 		super();

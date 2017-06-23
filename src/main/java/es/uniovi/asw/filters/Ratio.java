@@ -3,8 +3,8 @@ package es.uniovi.asw.filters;
 import java.util.Collections;
 import java.util.List;
 
-import comparator.RatioComparator;
-import model.Filtrable;
+import es.uniovi.asw.comparator.RatioComparator;
+import es.uniovi.asw.model.Filtrable;
 public class Ratio implements Filter{
 
 	@Override

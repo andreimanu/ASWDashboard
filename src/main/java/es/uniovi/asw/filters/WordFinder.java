@@ -3,7 +3,7 @@ package es.uniovi.asw.filters;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Filtrable;
+import es.uniovi.asw.model.Filtrable;
 
 public class WordFinder implements Filter{
 

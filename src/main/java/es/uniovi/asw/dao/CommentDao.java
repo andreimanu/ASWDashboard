@@ -8,20 +8,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.PropReader;
-
-import es.uniovi.asw.kafka.KafkaProducer;
-import model.Comment;
-import model.Filtrable;
-import model.Proposal;
+import es.uniovi.asw.PropReader;
+import es.uniovi.asw.kafka.KafkaProducer; 
+import es.uniovi.asw.model.Comment;
+import es.uniovi.asw.model.Proposal;
+import es.uniovi.asw.model.filtrable.Filtrable;
 
 public class CommentDao {
 
 	private static Connection conn;
-	private static KafkaProducer kfc;
+//	private static KafkaProducer kfc;
 	public CommentDao() {
 		try {
-			kfc = new KafkaProducer();
+			//kfc = new KafkaProducer();
 			openConn();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,7 +51,7 @@ public class CommentDao {
 			stmt.setInt(2, comment.getUser().getId());
 			stmt.setInt(3, comment.getProposal().getId());
 			stmt.setString(4, comment.getDate());
-			kfc.send("createdComment", String.valueOf(comment.getId()));
+			KafkaProducer.send("createdComment", String.valueOf(comment.getProposal().getId()));
 			return stmt.executeUpdate();		
 
 		} catch (SQLException e) {
@@ -82,4 +81,5 @@ public class CommentDao {
 			return null;		
 		}
 	}
+	
 }

@@ -1,10 +1,10 @@
-package model;
+package es.uniovi.asw.model.filtrable;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import model.User;
+import es.uniovi.asw.model.User;
 
 public class CFiltrable implements Filtrable{
 
@@ -18,6 +18,9 @@ public class CFiltrable implements Filtrable{
 		return Calendar.YEAR + "/" + Calendar.MONTH + "/" + Calendar.DAY_OF_MONTH;
 	}
 	
+	public String getRatio() {
+		return String.valueOf(getPositiveVotes().size()/(getNegativeVotes().size() == 0 ? 1 : getNegativeVotes().size()));
+	}
 	public String getText() {
 		return text;
 	}

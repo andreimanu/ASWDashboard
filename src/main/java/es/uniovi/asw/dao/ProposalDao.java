@@ -8,24 +8,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.PropReader;
-
+import es.uniovi.asw.PropReader;
 import es.uniovi.asw.kafka.KafkaProducer;
-import model.Proposal;
+import es.uniovi.asw.model.Proposal;
 
 public class ProposalDao {
 	private static Connection conn;
-	private static KafkaProducer kfp;
+//	private static KafkaProducer kfp;
+	public static boolean Refresh;
+	public static int NewID;
 	public ProposalDao() { 
 		try {
-			kfp = new KafkaProducer();
+			//kfp = new KafkaProducer();
 			openConn();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void openConn() throws SQLException {
+	private static void openConn() throws SQLException {
 		try {
 			if (conn == null) {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -76,7 +77,24 @@ public class ProposalDao {
 		}
 		return ret;
 	}
-	
+	public static Proposal GetProposalByID(int UserID) {
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(PropReader.get("PROPOSAL_BY_ID"));
+			pstmt.setInt(1, UserID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Proposal prop = new Proposal(UserDao.getUserByID(rs.getInt("UserID")), rs.getString("Title"),
+						rs.getString("Category"), rs.getString("Text"), rs.getInt("ID"), rs.getString("Date"));
+				VoteDao.SetVotes(prop);
+				prop.setComments(CommentDao.getCommentsOf(prop));
+				return prop;
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
 	public static List<Proposal> getAllProposals() {
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(PropReader.get("PROPOSAL_ALL"));
@@ -89,6 +107,7 @@ public class ProposalDao {
 				Proposal prop = new Proposal(UserDao.getUserByID(rs.getInt("UserID")), rs.getString("Title"),
 						rs.getString("Category"), rs.getString("Text"), rs.getInt("ID"), rs.getString("Date"));
 				VoteDao.SetVotes(prop);
+				System.out.println(prop);
 				prop.setComments(CommentDao.getCommentsOf(prop));
 				propos.add(prop);
 			} 
@@ -117,7 +136,7 @@ public class ProposalDao {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(PropReader.get("PROPOSAL_DELETE"));
 			stmt.setInt(1, proposal.getId());
-			kfp.send("deletedProposal", String.valueOf(proposal.getId()));
+			KafkaProducer.send("deletedProposal", String.valueOf(proposal.getId()));
 			return stmt.executeUpdate();
 		} catch (SQLException e) {
 			return 0;
@@ -129,7 +148,7 @@ public class ProposalDao {
 		try {
 			if(exists(proposal)) {
 				VoteDao.SaveVotes(proposal);
-				kfp.send("votedProposal", String.valueOf(proposal.getId()));
+				KafkaProducer.send("votedProposal", String.valueOf(proposal.getId()));
 				return 1;
 			}
 			String[] notAllowed = PropReader.get("notAllowedWords").toString().split(",");
@@ -146,7 +165,7 @@ public class ProposalDao {
 			stmt.setString(5, proposal.getCategory());
 			stmt.setString(6, proposal.getDate());
 			VoteDao.SaveVotes(proposal);
-			kfp.send("createdProposal", String.valueOf(proposal.getId()));
+			KafkaProducer.send("createdProposal", String.valueOf(proposal.getId()));
 			return stmt.executeUpdate();		
 
 		} catch (SQLException e) {
@@ -176,6 +195,7 @@ public class ProposalDao {
 
 		public static int getNewIdNumber() {
 			try {
+				openConn();
 				PreparedStatement stmt = conn.prepareStatement(PropReader.get("PROPOSAL_NEW_ID"));
 				
 				ResultSet rs = stmt.executeQuery();

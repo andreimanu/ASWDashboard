@@ -1,4 +1,4 @@
-package model;
+package es.uniovi.asw.model;
 
 public class User {
 
@@ -27,6 +27,10 @@ public class User {
 		this.setAddress(Address);
 	}
 	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}

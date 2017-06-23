@@ -3,8 +3,8 @@ package es.uniovi.asw.filters;
 import java.util.Collections;
 import java.util.List;
 
-import comparator.DateComparator;
-import model.Filtrable;
+import es.uniovi.asw.comparator.DateComparator;
+import es.uniovi.asw.model.Filtrable;
 
 
 public class Chronological implements Filter{

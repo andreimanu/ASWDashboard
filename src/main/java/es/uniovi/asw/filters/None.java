@@ -2,7 +2,7 @@ package es.uniovi.asw.filters;
 
 import java.util.List;
 
-import model.Filtrable;
+import es.uniovi.asw.model.Filtrable;
 
 
 

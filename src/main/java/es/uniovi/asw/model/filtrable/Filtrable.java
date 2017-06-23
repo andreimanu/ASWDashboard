@@ -1,8 +1,8 @@
-package model;
+package es.uniovi.asw.model.filtrable;
 
 import java.util.List;
 
-import model.User;
+import es.uniovi.asw.model.User;
 
 public interface Filtrable {
 

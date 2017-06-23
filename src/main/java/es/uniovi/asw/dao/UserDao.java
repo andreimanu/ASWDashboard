@@ -6,9 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.example.PropReader;
-
-import model.User;
+import es.uniovi.asw.model.User;
+import es.uniovi.asw.PropReader;
 
 public class UserDao {
 	private static Connection conn;
@@ -20,7 +19,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
-	private void openConn() throws SQLException {
+	private static void openConn() throws SQLException {
 		try {
 		if(conn == null) {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -63,6 +62,7 @@ public class UserDao {
 				return res;
 			}
 		} catch (SQLException e) {
+
 			return null;
 		}
 		return null;

@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.example.PropReader;
-
+import es.uniovi.asw.PropReader;
 import es.uniovi.asw.kafka.KafkaProducer;
-import model.Comment;
-import model.Proposal;
-import model.User;
+import es.uniovi.asw.model.Comment;
+import es.uniovi.asw.model.Proposal;
+import es.uniovi.asw.model.User;
 
 public class VoteDao {
 	private static Connection conn;
@@ -25,7 +24,7 @@ public class VoteDao {
 		}
 	}
 
-	private void openConn() throws SQLException {
+	private static void openConn() throws SQLException {
 		try {
 			if (conn == null) {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -51,6 +50,8 @@ public class VoteDao {
 					prop.AddNegative(UserDao.getUserByID(rs.getInt("VotUserID")));
 					
 			}
+			//KafkaProducer kfc = new KafkaProducer();
+			KafkaProducer.send("votedProposal", String.valueOf(prop.getId()));
 		} catch (SQLException e) {
 			return;
 		}
@@ -69,8 +70,8 @@ public class VoteDao {
 					prop.AddNegative(UserDao.getUserByID(rs.getInt("VotUserID")));
 					
 			}
-			KafkaProducer kfc = new KafkaProducer();
-			kfc.send("votedComment", String.valueOf(prop.getId()));
+			//KafkaProducer kfc = new KafkaProducer();
+			KafkaProducer.send("votedComment", String.valueOf(prop.getProposal().getId()));
 		} catch (SQLException e) {
 			return;
 		}
