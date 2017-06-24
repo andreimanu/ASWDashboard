@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <title>Change your password</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+              <form name="myForm" action="#" th:action="@{/participants/update}" th:object="${participant}" method="post"
+          onsubmit="return passwordValidation()">
+        <p>Email: <input type="email" th:field="*{email}" contenteditable="false"/></p>
+        <p>Password: <input id="password" type="password"  required="required"/></p>
+        <p>New password: <input name="newPassword" type="password" th:field="*{password}" required="required"/></p>
+        <input type="hidden" th:value="${participant.password}" name="oldPassword"/>
+        <p><input type="submit" value="Change password"/></p>
+    </form>
+    <form action="#" th:action="@{/participants/userInfo}" th:object="${participant}" method="post">
+        <p><input type="hidden" th:field="*{email}"/></p>
+        <p><input type="hidden" th:field="*{password}"/></p>
+        <p><input type="submit" value="Cancel"/></p>
+    </form>
+
+    <script>
+        function passwordValidation() {
+            var oldPassword = document.forms["myForm"]["oldPassword"].value;
+            var passwordEntered = document.getElementById("password").value;
+            if(oldPassword != passwordEntered){
+                alert("Password incorrect");
+                return false;
+            }
+        }
+    </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

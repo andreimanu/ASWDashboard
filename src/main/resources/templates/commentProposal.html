@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="../../static/css/common.css" />
+<link href="../css/common.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="table-responsive" align="left">
+					<h2 align="center">List of proposals</h2>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Content</th>
+								<th>Upvote</th>
+								<th>Ratio</th>
+								<th>Downvote</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${p.getComments()}">
+								<td th:text="${p.getTitle()}"></td>
+								<td th:text="${c.getText()}"></td>
+								<td><a th:href="${'/upvoteComment/' + p.getId()}"
+									class="btn btn-info" th:id="${p.getId()}">Me Likey</a></td>
+								<td th:text="${p.getRatio()}"></td>
+								<td><a th:href="${'/downvoteComment/' + p.getId()}"
+									class="btn btn-info" th:id="${p.getId()}">Nu-uh</a></td>
+								<td><a th:href="${'/select/' + p.getId()}"
+									class="btn btn-info" th:id="${c.getId()}">Select</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div align="right" class="col-xs-6">
+				<h2 align="center">Statistics</h2>
+				<h2 align="center">Male/Female votes</h2>
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" role="progressbar"
+						aria-valuenow="${selected.getMaleVotes()}" aria-valuemin="0"
+						aria-valuemax="100"
+						th:style="'width:'+ ${selected.getMaleVotes()}+'%;'"
+						th:text=" ${selected.getMaleVotes().toString()}"></div>
+				</div>
+				<div class="progress">
+					<div class="progress-bar progress-bar-danger" role="progressbar"
+						aria-valuenow="${selected.getFemaleVotes()}" aria-valuemin="0"
+						aria-valuemax="100"
+						th:style="'width:'+ ${selected.getFemaleVotes()}+'%;'"
+						th:text=" ${selected.getFemaleVotes().toString()}"></div>
+				</div>
+				<h2 align="center">Male Votes</h2>
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" role="progressbar"
+						aria-valuenow="${selected.getPositiveMaleVotes()}"
+						aria-valuemin="0" aria-valuemax="100"
+						th:style="'width:'+ ${selected.getPositiveMaleVotes()} + '%;'"
+						th:text=" ${selected.getPositiveMaleVotes().toString()}"></div>
+				</div>
+				<div class="progress">
+					<div class="progress-bar progress-bar-danger" role="progressbar"
+						aria-valuenow="${selected.getNegativeMaleVotes()}"
+						aria-valuemin="0" aria-valuemax="100"
+						th:style="'width:'+ ${selected.getNegativeMaleVotes()} + '%;'"
+						th:text=" ${selected.getNegativeMaleVotes().toString()}"></div>
+				</div>
+				<h2 align="center">Female Votes</h2>
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" role="progressbar"
+						aria-valuenow="${selected.getPositiveFemaleVotes()}"
+						aria-valuemin="0" aria-valuemax="100"
+						th:style="'width:'+ ${selected.getPositiveFemaleVotes()} + '%;'"
+						th:text=" ${selected.getPositiveFemaleVotes().toString()}"></div>
+				</div>
+				<div class="progress">
+					<div class="progress-bar progress-bar-danger" role="progressbar"
+						aria-valuenow="${selected.getNegativeFemaleVotes()}"
+						aria-valuemin="0" aria-valuemax="100"
+						th:style="'width:'+ ${selected.getNegativeFemaleVotes()} + '%;'"
+						th:text=" ${selected.getNegativeFemaleVotes().toString()}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
