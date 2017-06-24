@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,20 +19,21 @@ import es.uniovi.asw.dao.CommentDao;
 import es.uniovi.asw.dao.ProposalDao;
 import es.uniovi.asw.dao.UserDao;
 import es.uniovi.asw.dao.VoteDao;
-import es.uniovi.asw.kafka.KafkaProducer;
 import es.uniovi.asw.model.Comment;
 import es.uniovi.asw.model.Proposal;
 import es.uniovi.asw.model.User;
 import es.uniovi.asw.model.filtrable.Filtrable;
+
 @Controller
 public class MainController {
 	private User loggedUser;
-    @Autowired
-    private KafkaProducer kafkaProducer;
+//    @Autowired
+//    private KafkaProducer kafkaProducer;
     private List<Proposal> proposals;
     private Proposal selectedProposal;
     private Comment selectedComment;
     private Proposal p;
+    
     @ModelAttribute("Comment")
     public Comment getComment() {
     	return new Comment();
@@ -53,11 +53,12 @@ public class MainController {
         return model2;
     }
     
+    /*
     @RequestMapping("/send")
     public String send(Model model, @ModelAttribute Message message) {
         kafkaProducer.send("exampleTopic", message.getMessage());
         return "redirect:/";
-    }
+    }*/
 	
     @RequestMapping("/select/{id}")
     public String select(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){

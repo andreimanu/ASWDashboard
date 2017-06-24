@@ -1,6 +1,7 @@
 package es.uniovi.asw.kafka;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -25,6 +26,9 @@ public class KafkaConsumer {
 		}
 	}
 
+	public void SubscribeTo(List<String> topic) {
+		kfc.subscribe(topic);
+	}
 	public void Subscribe(String topic) {
 		kfc.subscribe(Arrays.asList(topic));
 	}

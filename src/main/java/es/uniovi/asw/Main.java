@@ -2,6 +2,7 @@ package es.uniovi.asw;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +12,12 @@ import es.uniovi.asw.dao.CommentDao;
 import es.uniovi.asw.dao.ProposalDao;
 import es.uniovi.asw.dao.UserDao;
 import es.uniovi.asw.dao.VoteDao;
-import es.uniovi.asw.menus.MainMenu;
-import es.uniovi.asw.menus.Menu;
+import es.uniovi.asw.kafka.KafkaConsumer;
+//import es.uniovi.asw.menus.MainMenu;
+//import es.uniovi.asw.menus.Menu;
 import es.uniovi.asw.model.User;
+
+
 @SpringBootApplication
 public class Main {
 
@@ -21,7 +25,7 @@ public class Main {
 	private static User currentUser = null;
 
 	public static void main (String[] args){
-		/*logUser();
+		/*
 		Thread kafka = new Thread() {
 		    public void run() {
 		        KafkaConsumer kfc = new KafkaConsumer();
@@ -33,9 +37,19 @@ public class Main {
 		        kfc.Read();
 		    }  
 		};
+
+		kafka.run();*/
+		
+		Thread kafka = new Thread() {
+		    public void run() {
+		    	KafkaConsumer kfc = new KafkaConsumer();
+		    	kfc.SubscribeTo(Arrays.asList("votedProposal", "votedComment", "createdProposal", "createdComment", "deletedProposal"));
+		    	kfc.Read();
+		    }
+		};
 		kafka.run();
+		
 		///currentUser = new User("Andrei Manu", 1679344);
-		mainMenu();  */
 		new CategoryDao();
 		new CommentDao();
 		new ProposalDao();
@@ -45,39 +59,5 @@ public class Main {
 	    
 	}
 	
-	private static User logUser(){
-		new UserDao();
-		try {
-			while (currentUser == null) {
-				System.out.println("Log with a valid user (National ID w/ no letters)");
-				currentUser = UserDao.getUserByID(Integer.parseInt(console.readLine()));
-			}
-		} catch (IOException e) {
-			currentUser = null;
-		}
-		
-		return currentUser;
-	}
 	
-	private static void mainMenu(){
-		String option = "";
-		Menu currentMenu = MainMenu.getInstance();
-		
-		while (!"exit".equals(option)){
-			System.out.println("");
-			currentMenu.showOptions();
-			try{  
-				option = console.readLine();
-				Menu newMenu = currentMenu.chooseOption(Integer.parseInt(option), currentUser);
-				currentMenu = (newMenu == null) ? currentMenu:newMenu;
-			} catch (IllegalArgumentException e){
-				if (!"exit".equals(option))
-					System.out.println("That's not a valid option");
-			} catch (Exception e){
-				System.out.println("Something went wrong");
-			}
-		}
-		
-		System.out.println("Bye!");
-	}
 }
