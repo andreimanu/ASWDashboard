@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import es.uniovi.asw.comparator.RatioComparator;
-import es.uniovi.asw.model.Filtrable;
+import es.uniovi.asw.model.filtrable.Filtrable;
+
 public class Ratio implements Filter{
 
 	@Override

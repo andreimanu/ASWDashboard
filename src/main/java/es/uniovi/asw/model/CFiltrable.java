@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import es.uniovi.asw.model.User;
+import es.uniovi.asw.model.filtrable.Filtrable;
 
 public class CFiltrable implements Filtrable{
 

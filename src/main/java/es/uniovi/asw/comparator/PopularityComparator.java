@@ -2,7 +2,7 @@ package es.uniovi.asw.comparator;
 
 import java.util.Comparator;
 
-import es.uniovi.asw.model.Filtrable;
+import es.uniovi.asw.model.filtrable.Filtrable;
 
 public class PopularityComparator implements Comparator<Filtrable> {
 

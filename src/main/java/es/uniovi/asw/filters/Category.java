@@ -3,8 +3,9 @@ package es.uniovi.asw.filters;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.uniovi.asw.model.Filtrable;
+import es.uniovi.asw.model.filtrable.Filtrable;
 import es.uniovi.asw.model.Proposal;
+
 public class Category implements Filter{
 	private String category;
 	public Category(String category) {
