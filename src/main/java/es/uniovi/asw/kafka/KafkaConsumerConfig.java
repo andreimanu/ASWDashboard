@@ -32,7 +32,7 @@ public class KafkaConsumerConfig {
 	@Bean
 	public Map<String, Object> consumerConfigs() {
 		Map<String, Object> propsMap = new HashMap<>();
-		propsMap.put("spring.kafka.bootstrap-servers", "47.62.155.222:9092")
+		propsMap.put("spring.kafka.bootstrap-servers", "47.62.155.222:9092");
 		propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "47.62.155.222:9092");
 		propsMap.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 		propsMap.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
