@@ -1,6 +1,10 @@
 package es.uniovi.asw;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import es.uniovi.asw.comparator.DateComparator;
+import es.uniovi.asw.comparator.PopularityComparator;
+import es.uniovi.asw.comparator.RatioComparator;
 import es.uniovi.asw.dao.CommentDao;
 import es.uniovi.asw.dao.ProposalDao;
 import es.uniovi.asw.dao.UserDao;
@@ -33,7 +40,7 @@ public class MainController {
     private Proposal selectedProposal;
     private Comment selectedComment;
     private Proposal p;
-    
+    private Comparator<Filtrable> comparator;
     @ModelAttribute("Comment")
     public Comment getComment() {
     	return new Comment();
@@ -184,6 +191,38 @@ public class MainController {
     	return "redirect:/commentProposal/" + proposalID;
     }
     
+    @RequestMapping("/orderByDate/") 
+    public String orderByDate(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    	comparator = new DateComparator();
+    	request.addAttribute("id", loggedUser.getId());
+    	request.addAttribute("password", loggedUser.getPassword());
+    	return "redirect:../showAddProposals";
+    }
+    
+    @RequestMapping("/orderByPopularity/") 
+    public String orderByPopularity(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    	comparator = new PopularityComparator();
+    	request.addAttribute("id", loggedUser.getId());
+    	request.addAttribute("password", loggedUser.getPassword());
+    	return "redirect:../showAddProposals";
+    }
+    
+    @RequestMapping("/orderByRatio/") 
+    public String orderByRatio(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    	comparator = new RatioComparator();
+    	request.addAttribute("id", loggedUser.getId());
+    	request.addAttribute("password", loggedUser.getPassword());
+    	return "redirect:../showAddProposals";
+    }
+    
+    @RequestMapping("/orderNone/") 
+    public String orderNone(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    	comparator = null;
+    	request.addAttribute("id", loggedUser.getId());
+    	request.addAttribute("password", loggedUser.getPassword());
+    	return "redirect:../showAddProposals";
+    }
+    
     @RequestMapping("/upvoteComment/{id}")
     public String upvoteComment(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
     	new VoteDao();
@@ -211,6 +250,7 @@ public class MainController {
     public List<Proposal> getAllProposals(){
     	new ProposalDao();
    		proposals = ProposalDao.getAllProposals();
+    	if(comparator != null) Collections.sort(proposals, comparator);
     	return proposals;
     }
     

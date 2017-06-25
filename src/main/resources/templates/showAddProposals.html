@@ -33,8 +33,25 @@
 				</div>
 			</div>
 			<div align="right" class="col-xs-6">
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button"
+						id="menu1" data-toggle="dropdown">
+						Order By <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							th:href="${'/orderByDate/'">Date</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="${'/orderByPopularity'/">Popularity</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="${'/orderByRatio'/">Ratio</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="${'/orderNone'/">None</a></li>
+					</ul>
+				</div>
 				<h2 align="center">Statistics</h2>
-				<a th:href="${'/deselect/'" class="btn btn-info">General Statistics</a>
+				<a th:href="${'/deselect/'" class="btn btn-info">General
+					Statistics</a>
 				<h2 align="center">Male/Female votes</h2>
 				<div class="progress">
 					<div class="progress-bar progress-bar-success" role="progressbar"
