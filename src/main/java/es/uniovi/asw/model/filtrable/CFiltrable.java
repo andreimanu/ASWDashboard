@@ -1,5 +1,6 @@
 package es.uniovi.asw.model.filtrable;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -14,6 +15,10 @@ public class CFiltrable implements Filtrable{
 	protected int id;
 	protected User user;
 
+	public CFiltrable() {
+		this.positiveVotes = new ArrayList<User>();
+		this.negativeVotes = new ArrayList<User>();
+	}
 	public String getNow() {
 		return Calendar.YEAR + "/" + Calendar.MONTH + "/" + Calendar.DAY_OF_MONTH;
 	}
@@ -71,6 +76,65 @@ public class CFiltrable implements Filtrable{
 
 	@Override
 	public int compareByRatio(Filtrable o2) {
-		return Double.compare(this.getPositiveVotes().size() / this.getNegativeVotes().size() == 0 ? 1 : this.getNegativeVotes().size(), o2.getPositiveVotes().size() / o2.getNegativeVotes().size() == 0 ? 1 : o2.getNegativeVotes().size());
+		return Double.compare(this.getPositiveVotes().size() / (this.getNegativeVotes().size() == 0 ? 1 : this.getNegativeVotes().size()), o2.getPositiveVotes().size() / (o2.getNegativeVotes().size() == 0 ? 1 : o2.getNegativeVotes().size()));
+	}
+	public int getMaleVotes() {
+		if(positiveVotes == null || negativeVotes == null) return 0;
+		ArrayList<User> result = new ArrayList<User>();
+		for(User us : positiveVotes)
+			if(us.isGender())
+				result.add(us);
+		for(User us : negativeVotes)
+			if(us.isGender())
+				result.add(us);
+		return result.size();
+	}
+	
+	public int getFemaleVotes() {
+		if(positiveVotes == null || negativeVotes == null) return 0;
+		ArrayList<User> result = new ArrayList<User>();
+		for(User us : positiveVotes)
+			if(!us.isGender())
+				result.add(us);
+		for(User us : negativeVotes)
+			if(!us.isGender())
+				result.add(us);
+		return result.size();
+	}
+	
+	public int getPositiveMaleVotes() {
+		if(positiveVotes == null || negativeVotes == null) return 0;
+		ArrayList<User> result = new ArrayList<User>();
+		for(User us : positiveVotes)
+			if(us.isGender())
+				result.add(us);
+		return result.size();
+	}
+	
+	public int getPositiveFemaleVotes() {
+		if(positiveVotes == null || negativeVotes == null) return 0;
+		ArrayList<User> result = new ArrayList<User>();
+		for(User us : positiveVotes)
+			if(!us.isGender())
+				result.add(us);
+		return result.size();
+	}
+	
+	public int getNegativeMaleVotes() {
+		if(positiveVotes == null || negativeVotes == null) return 0;
+		ArrayList<User> result = new ArrayList<User>();
+		for(User us : negativeVotes)
+			if(us.isGender())
+				result.add(us);
+		return result.size();
+	}
+	
+	public int getNegativeFemaleVotes() {
+		if(positiveVotes == null || negativeVotes == null) return 0;
+		ArrayList<User> result = new ArrayList<User>();
+		for(User us : negativeVotes)
+			if(!us.isGender())
+				result.add(us);
+		return result.size();		
 	}
 }

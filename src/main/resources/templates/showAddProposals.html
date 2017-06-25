@@ -1,7 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap-dropdown.js"></script>
+<script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
 <link rel="stylesheet" href="../static/css/common.css" />
 <link href="css/common.css" rel="stylesheet" />
 </head>
@@ -40,17 +46,17 @@
 					</button>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 						<li role="presentation"><a role="menuitem" tabindex="-1"
-							th:href="${'/orderByDate/'">Date</a></li>
+							th:href="${'/orderByDate/'}">Date</a></li>
 						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="${'/orderByPopularity'/">Popularity</a></li>
+							th:href="${'/orderByPopularity/'}">Popularity</a></li>
 						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="${'/orderByRatio'/">Ratio</a></li>
+							th:href="${'/orderByRatio/'}">Ratio</a></li>
 						<li role="presentation"><a role="menuitem" tabindex="-1"
-							href="${'/orderNone'/">None</a></li>
+							th:href="${'/orderNone/'}">None</a></li>
 					</ul>
 				</div>
 				<h2 align="center">Statistics</h2>
-				<a th:href="${'/deselect/'" class="btn btn-info">General
+				<a th:href="${'/deselect/'}" class="btn btn-info">General
 					Statistics</a>
 				<h2 align="center">Male/Female votes</h2>
 				<div class="progress">

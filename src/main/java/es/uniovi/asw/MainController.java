@@ -76,7 +76,7 @@ public class MainController {
     	return "redirect:../showAddProposals";
     }
     @RequestMapping("/deselect/Comm")
-    public String deselectComm(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    public String deselectComm(RedirectAttributes request){
     	selectedComment = null;
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -84,7 +84,7 @@ public class MainController {
     }
     
     @RequestMapping("/deselect/")
-    public String deselect(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    public String deselect(RedirectAttributes request){
     	selectedProposal = null;
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -192,7 +192,7 @@ public class MainController {
     }
     
     @RequestMapping("/orderByDate/") 
-    public String orderByDate(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    public String orderByDate(RedirectAttributes request){
     	comparator = new DateComparator();
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -200,7 +200,7 @@ public class MainController {
     }
     
     @RequestMapping("/orderByPopularity/") 
-    public String orderByPopularity(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    public String orderByPopularity(RedirectAttributes request){
     	comparator = new PopularityComparator();
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -208,7 +208,7 @@ public class MainController {
     }
     
     @RequestMapping("/orderByRatio/") 
-    public String orderByRatio(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    public String orderByRatio(RedirectAttributes request){
     	comparator = new RatioComparator();
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -216,7 +216,7 @@ public class MainController {
     }
     
     @RequestMapping("/orderNone/") 
-    public String orderNone(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    public String orderNone(RedirectAttributes request){
     	comparator = null;
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
