@@ -12,6 +12,8 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
+import org.apache.kafka.clients.CommonClientConfigs;
+
 public class KafkaConsumerConfig {
 	@Bean
 	KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
@@ -30,6 +32,7 @@ public class KafkaConsumerConfig {
 	@Bean
 	public Map<String, Object> consumerConfigs() {
 		Map<String, Object> propsMap = new HashMap<>();
+		propsMap.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "47.62.155.222:9092")
 		propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "47.62.155.222:9092");
 		propsMap.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 		propsMap.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
