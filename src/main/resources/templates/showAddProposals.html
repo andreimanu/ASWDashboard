@@ -1,7 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script
+	src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/bootstrap/bootstrap-dropdown.js"></script>
 <script>
      $(document).ready(function(){
@@ -12,6 +14,14 @@
 <link href="css/common.css" rel="stylesheet" />
 </head>
 <body>
+	<script th:inline="javascript">
+/*<![CDATA[*/
+
+    var message = [[${refresh}]];
+    if(message == true) location.reload(true);
+
+/*]]>*/
+</script>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-6">
