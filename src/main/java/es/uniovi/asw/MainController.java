@@ -39,6 +39,7 @@ public class MainController {
     private Comment selectedComment;
     private Proposal p;
     private Comparator<Filtrable> comparator;
+    public static boolean refresh = false;
     @ModelAttribute("Comment")
     public Comment getComment() {
     	return new Comment();
@@ -236,6 +237,13 @@ public class MainController {
    		proposals = ProposalDao.getAllProposals();
     	if(comparator != null) Collections.sort(proposals, comparator);
     	return proposals;
+    }
+    
+    @ModelAttribute("refresh")
+    public boolean getRefresh() {
+    	if(!refresh) return false;
+    	refresh = false;
+    	return true;
     }
     
 }
