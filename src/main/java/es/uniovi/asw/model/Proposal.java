@@ -53,7 +53,7 @@ public class Proposal extends CFiltrable {
 	}
 	
 	public Proposal() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	/**
 	 * returns the list of comments of the proposal. It may be filtered by one

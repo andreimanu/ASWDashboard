@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import es.uniovi.asw.PropReader;
-import es.uniovi.asw.kafka.KafkaProducer;
 import es.uniovi.asw.model.Comment;
 import es.uniovi.asw.model.Proposal;
 import es.uniovi.asw.model.User;
@@ -50,8 +49,6 @@ public class VoteDao {
 					prop.AddNegative(UserDao.getUserByID(rs.getInt("VotUserID")));
 					
 			}
-			//KafkaProducer kfc = new KafkaProducer();
-			KafkaProducer.send("votedProposal", String.valueOf(prop.getId()));
 		} catch (SQLException e) {
 			return;
 		}
@@ -70,8 +67,6 @@ public class VoteDao {
 					prop.AddNegative(UserDao.getUserByID(rs.getInt("VotUserID")));
 					
 			}
-			//KafkaProducer kfc = new KafkaProducer();
-			KafkaProducer.send("votedComment", String.valueOf(prop.getProposal().getId()));
 		} catch (SQLException e) {
 			return;
 		}

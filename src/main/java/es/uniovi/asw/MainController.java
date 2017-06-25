@@ -68,6 +68,22 @@ public class MainController {
     	request.addAttribute("password", loggedUser.getPassword());
     	return "redirect:../showAddProposals";
     }
+    @RequestMapping("/deselect/Comm")
+    public String deselectComm(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    	selectedComment = null;
+    	request.addAttribute("id", loggedUser.getId());
+    	request.addAttribute("password", loggedUser.getPassword());
+    	return "redirect:../commentProposal/" + p.getId();
+    }
+    
+    @RequestMapping("/deselect/")
+    public String deselect(@ModelAttribute("id") Integer uid, RedirectAttributes request){
+    	selectedProposal = null;
+    	request.addAttribute("id", loggedUser.getId());
+    	request.addAttribute("password", loggedUser.getPassword());
+    	return "redirect:../showAddProposals";
+    }
+    
     @RequestMapping("/selectComment/{id}")
     public String selectComment(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
     	List<Filtrable> cmnt = p.getComments();
@@ -85,7 +101,15 @@ public class MainController {
     	ModelAndView mdv = new ModelAndView("showAddProposals");
     	mdv.addObject("user", user);
     	mdv.addObject("proposals", ProposalDao.getAllProposals());
-    	if(selectedProposal == null) selectedProposal = ProposalDao.getAllProposals().get(0);
+    	if(selectedProposal == null) {
+    		selectedProposal = new Proposal();
+    		for(Proposal prop : ProposalDao.getAllProposals()) {
+    			for(User usr : prop.getPositiveVotes() )
+    				selectedProposal.AddPositive(usr);
+    			for(User usr : prop.getNegativeVotes())
+    				selectedProposal.AddNegative(usr);
+    		}
+    	}
     	mdv.addObject("selected", selectedProposal);
     	
 		if (user == null)
@@ -105,7 +129,18 @@ public class MainController {
     	System.out.println(p);
     	model.addAttribute("p", p);
     	mav.addObject("p", p);
-    	if(selectedComment == null) selectedComment = (Comment) p.getComments().get(0);
+    	if(selectedComment == null) {
+    		selectedComment = new Comment();
+    		
+    		for(Proposal prop : ProposalDao.getAllProposals()) {
+    			for(Filtrable cf : prop.getComments()) {
+    				for(User usr : cf.getPositiveVotes())
+    					selectedComment.AddPositive(usr);
+    				for(User usr : cf.getNegativeVotes())
+    					selectedComment.AddNegative(usr);
+    			}
+    		}
+    	}
     	mav.addObject("selected", selectedComment);
     	return mav;
     }

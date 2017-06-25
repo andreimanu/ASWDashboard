@@ -9,17 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.uniovi.asw.PropReader;
-import es.uniovi.asw.kafka.KafkaProducer;
 import es.uniovi.asw.model.Proposal;
 
 public class ProposalDao {
 	private static Connection conn;
-//	private static KafkaProducer kfp;
 	public static boolean Refresh;
 	public static int NewID;
 	public ProposalDao() { 
 		try {
-			//kfp = new KafkaProducer();
 			openConn();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -136,7 +133,6 @@ public class ProposalDao {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(PropReader.get("PROPOSAL_DELETE"));
 			stmt.setInt(1, proposal.getId());
-			KafkaProducer.send("deletedProposal", String.valueOf(proposal.getId()));
 			return stmt.executeUpdate();
 		} catch (SQLException e) {
 			return 0;
@@ -148,7 +144,6 @@ public class ProposalDao {
 		try {
 			if(exists(proposal)) {
 				VoteDao.SaveVotes(proposal);
-				KafkaProducer.send("votedProposal", String.valueOf(proposal.getId()));
 				return 1;
 			}
 			String[] notAllowed = PropReader.get("notAllowedWords").toString().split(",");
@@ -165,7 +160,6 @@ public class ProposalDao {
 			stmt.setString(5, proposal.getCategory());
 			stmt.setString(6, proposal.getDate());
 			VoteDao.SaveVotes(proposal);
-			KafkaProducer.send("createdProposal", String.valueOf(proposal.getId()));
 			return stmt.executeUpdate();		
 
 		} catch (SQLException e) {
