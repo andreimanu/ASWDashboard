@@ -16,9 +16,14 @@
 <body>
 	<script th:inline="javascript">
 /*<![CDATA[*/
-
-    var message = [[${refresh}]];
-    if(message == true) location.reload(true);
+function beginrefresh() {
+    setInterval("refresh()", 500)
+  }
+  function refresh() {
+	    var message = [[${refresh}]];
+	    if(message == true) location.reload(true);
+  }
+  window.onload = beginrefresh;
 
 /*]]>*/
 </script>
