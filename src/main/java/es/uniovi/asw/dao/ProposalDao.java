@@ -105,14 +105,14 @@ public class ProposalDao {
 			while (rs.next()){
 				Proposal prop = new Proposal(UserDao.getUserByID(rs.getInt("UserID")), rs.getString("Title"),
 						rs.getString("Category"), rs.getString("Text"), rs.getInt("ID"), rs.getString("Date"));
-				Long timeVotes1 = System.currentTimeMillis();
+				//Long timeVotes1 = System.currentTimeMillis();
 				VoteDao.SetVotes(prop);
-				Long timeVotes2 = System.currentTimeMillis();
-				System.out.println("Vote time: " + String.valueOf(timeVotes2-timeVotes1));
-				Long timeComments1 = System.currentTimeMillis();
+				//Long timeVotes2 = System.currentTimeMillis();
+				//System.out.println("Vote time: " + String.valueOf(timeVotes2-timeVotes1));
+				//Long timeComments1 = System.currentTimeMillis();
 				prop.setComments(CommentDao.getCommentsOf(prop));
-				Long timeComments2 = System.currentTimeMillis();
-				System.out.println("Comments time: " + String.valueOf(timeComments2-timeComments1));
+				//Long timeComments2 = System.currentTimeMillis();
+				//System.out.println("Comments time: " + String.valueOf(timeComments2-timeComments1));
 				propos.add(prop);
 			} 
 			Long time2 = System.currentTimeMillis();

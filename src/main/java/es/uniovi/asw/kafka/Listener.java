@@ -13,5 +13,6 @@ public class Listener {
 	@KafkaListener(id = "pListener", topics = "votedProposal", group = "test")
 	public void listen(ConsumerRecord<?, ?> record) {
 		MainController.refresh = true;
+		System.out.println("------------------\n RECEIVED MESSAGE VOTED PROPOSAL \n -------------------");
 	}
 }
