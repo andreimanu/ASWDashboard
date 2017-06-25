@@ -7,38 +7,13 @@ import es.uniovi.asw.dao.CommentDao;
 import es.uniovi.asw.dao.ProposalDao;
 import es.uniovi.asw.dao.UserDao;
 import es.uniovi.asw.dao.VoteDao;
-//import es.uniovi.asw.kafka.KafkaConsumer;
 
 
 @SpringBootApplication
 public class Main {
 
 	public static void main (String[] args){
-		/*
-		Thread kafka = new Thread() {
-		    public void run() {
-		        KafkaConsumer kfc = new KafkaConsumer();
-		        kfc.Subscribe("votedProposal");
-		        kfc.Subscribe("votedComment" );
-		        kfc.Subscribe("createdProposal" );
-		        kfc.Subscribe("createdComment" );
-		        kfc.Subscribe("deletedProposal" );
-		        kfc.Read();
-		    }  
-		};
-
-		kafka.run();*/
-		/*
-		Thread kafka = new Thread() {
-		    public void run() {
-		    	KafkaConsumer kfc = new KafkaConsumer();
-		    	kfc.SubscribeTo(Arrays.asList("votedProposal", "votedComment", "createdProposal", "createdComment", "deletedProposal"));
-		    	kfc.Read();
-		    }
-		};
-		kafka.run();
-		*/
-		///currentUser = new User("Andrei Manu", 1679344);
+		
 		new CategoryDao();
 		new CommentDao();
 		new ProposalDao();

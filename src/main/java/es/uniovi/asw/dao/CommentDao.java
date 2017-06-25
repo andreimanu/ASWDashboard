@@ -64,10 +64,14 @@ public class CommentDao {
 			
 			List<Filtrable> comments = new ArrayList<Filtrable>();
 			while(rs.next()){
-				new UserDao();
+				Long CreateComment1 = System.currentTimeMillis();
 				Comment com = new Comment(UserDao.getUserByID(rs.getInt("UserID")), proposal, rs.getString("Text"), rs.getInt("Comment.ID"), rs.getString("Comment.Date"));
-				new VoteDao();
+				Long CreateComment2 = System.currentTimeMillis();
+				System.out.println("Created comment in: " + String.valueOf(CreateComment2-CreateComment1));
+				Long CommentVote1 = System.currentTimeMillis();
 				VoteDao.SetVotes(com);
+				Long CommentVote2 = System.currentTimeMillis();
+				System.out.println("Created vote comments in: " + String.valueOf(CommentVote2-CommentVote1));
 				comments.add(com);
 			}
 			

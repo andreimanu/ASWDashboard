@@ -1,8 +1,6 @@
 package es.uniovi.asw;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -69,7 +67,6 @@ public class MainController {
 	
     @RequestMapping("/select/{id}")
     public String select(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
-    	new ProposalDao();
     	selectedProposal = ProposalDao.GetProposalByID(Integer.parseInt(id));
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -130,7 +127,6 @@ public class MainController {
     @RequestMapping("/commentProposal/{id}")
     //move to commentProposal.html
     public ModelAndView commentProposal(@PathVariable("id") String id, Model model){
-    	new ProposalDao();
     	p = ProposalDao.GetProposalByID(Integer.parseInt(id));
     	ModelAndView mav = new ModelAndView("commentProposal");
     	System.out.println(p);
@@ -154,7 +150,6 @@ public class MainController {
     
     @RequestMapping("/upvoteProposal/{id}")
     public String upvoteProposal(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
-    	new VoteDao();
     	VoteDao.InsertVotesProp(Integer.parseInt(id), loggedUser.getId(), 1);
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -163,7 +158,6 @@ public class MainController {
     
     @RequestMapping("/downvoteProposal/{id}")
     public String downvoteProposal(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
-    	new VoteDao();
     	VoteDao.InsertVotesProp(Integer.parseInt(id),  loggedUser.getId(), 0);
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -173,7 +167,6 @@ public class MainController {
     @RequestMapping("/createProposal")
     public String createProposal(@ModelAttribute("Proposal") Proposal proposal, @RequestParam(value="title") String title, @RequestParam(value="text") String text,
     							@RequestParam(value="category") String category, Model model, RedirectAttributes request){
-    	new ProposalDao();
     	Proposal prp = new Proposal(loggedUser, title, category, text);
     	ProposalDao.save(prp);
     	request.addAttribute("id", loggedUser.getId());
@@ -184,8 +177,6 @@ public class MainController {
     @RequestMapping("/createComment/{id}")
     // {id} proposal ID
     public String createComment(@ModelAttribute("Comment") Comment comment, @PathVariable("id") String proposalID, @RequestParam(value="text") String text){
-    	new CommentDao();
-    	new ProposalDao();
     	Comment com = new Comment(loggedUser,ProposalDao.GetProposalByID(Integer.parseInt(proposalID)), text);
     	CommentDao.save(com);
     	return "redirect:/commentProposal/" + proposalID;
@@ -225,7 +216,6 @@ public class MainController {
     
     @RequestMapping("/upvoteComment/{id}")
     public String upvoteComment(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
-    	new VoteDao();
     	VoteDao.InsertVotesCom(Integer.parseInt(id),  loggedUser.getId(), 1);
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
@@ -234,18 +224,12 @@ public class MainController {
     
     @RequestMapping("/downvoteComment/{id}")
     public String downvoteComment(@PathVariable("id") String id, @ModelAttribute("id") Integer uid, RedirectAttributes request){
-    	new VoteDao();
     	VoteDao.InsertVotesCom(Integer.parseInt(id),  loggedUser.getId(), 0);
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());
     	return "showAddProposals";
     }
     
-    /*
-     * ejecutarlo en los html, con bucle 
-     * <tr th:each="p : ${allProposals}">
-     * p.getTitle()...
-     */
     @ModelAttribute("allProposals")
     public List<Proposal> getAllProposals(){
     	new ProposalDao();

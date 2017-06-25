@@ -29,6 +29,7 @@ public class ProposalDao {
 				Class.forName("com.mysql.jdbc.Driver");
 				conn = DriverManager.getConnection(PropReader.get("DATABASE_URL"), PropReader.get("DATABASE_USER"),
 						PropReader.get("DATABASE_PASS"));
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,6 +95,7 @@ public class ProposalDao {
 	}
 	public static List<Proposal> getAllProposals() {
 		try {
+			Long time = System.currentTimeMillis();
 			PreparedStatement pstmt = conn.prepareStatement(PropReader.get("PROPOSAL_ALL"));
 			
 			ResultSet rs = pstmt.executeQuery();
@@ -103,11 +105,18 @@ public class ProposalDao {
 			while (rs.next()){
 				Proposal prop = new Proposal(UserDao.getUserByID(rs.getInt("UserID")), rs.getString("Title"),
 						rs.getString("Category"), rs.getString("Text"), rs.getInt("ID"), rs.getString("Date"));
+				Long timeVotes1 = System.currentTimeMillis();
 				VoteDao.SetVotes(prop);
-				System.out.println(prop);
+				Long timeVotes2 = System.currentTimeMillis();
+				System.out.println("Vote time: " + String.valueOf(timeVotes2-timeVotes1));
+				Long timeComments1 = System.currentTimeMillis();
 				prop.setComments(CommentDao.getCommentsOf(prop));
+				Long timeComments2 = System.currentTimeMillis();
+				System.out.println("Comments time: " + String.valueOf(timeComments2-timeComments1));
 				propos.add(prop);
 			} 
+			Long time2 = System.currentTimeMillis();
+			System.out.println("Get proposals time: " + String.valueOf(time2-time));
 			return propos;
 		} catch (SQLException e) {
 			return null;
