@@ -3,7 +3,7 @@ package es.uniovi.asw.filters;
 import java.util.Collections;
 import java.util.List;
 
-import es.uniovi.asw.comparator.RatioComparator;
+import es.uniovi.asw.dashboard.comparator.RatioComparator;
 import es.uniovi.asw.model.filtrable.Filtrable;
 
 public class Ratio implements Filter{

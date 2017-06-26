@@ -3,7 +3,7 @@ package es.uniovi.asw.filters;
 import java.util.Collections;
 import java.util.List;
 
-import es.uniovi.asw.comparator.PopularityComparator;
+import es.uniovi.asw.dashboard.comparator.PopularityComparator;
 import es.uniovi.asw.model.filtrable.Filtrable;
 
 

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import es.uniovi.asw.comparator.DateComparator;
-import es.uniovi.asw.comparator.PopularityComparator;
-import es.uniovi.asw.comparator.RatioComparator;
+import es.uniovi.asw.dashboard.comparator.DateComparator;
+import es.uniovi.asw.dashboard.comparator.PopularityComparator;
+import es.uniovi.asw.dashboard.comparator.RatioComparator;
 import es.uniovi.asw.dashboard.dao.CommentDao;
 import es.uniovi.asw.dashboard.dao.ProposalDao;
 import es.uniovi.asw.dashboard.dao.UserDao;
@@ -104,11 +104,12 @@ public class MainController {
     	if(uId.isEmpty()) return new ModelAndView("login");
     	User user = UserDao.getUserLog(Integer.parseInt(uId), uPass);
     	ModelAndView mdv = new ModelAndView("showAddProposals");
+    	List<Proposal> proposalsLocal = ProposalDao.getAllProposals();
     	mdv.addObject("user", user);
-    	mdv.addObject("proposals", ProposalDao.getAllProposals());
+    	mdv.addObject("proposals", proposalsLocal);
     	if(selectedProposal == null) {
     		selectedProposal = new Proposal();
-    		for(Proposal prop : ProposalDao.getAllProposals()) {
+    		for(Proposal prop : proposalsLocal) {
     			for(User usr : prop.getPositiveVotes() )
     				selectedProposal.AddPositive(usr);
     			for(User usr : prop.getNegativeVotes())

@@ -1,4 +1,4 @@
-package es.uniovi.asw.comparator;
+package es.uniovi.asw.dashboard.comparator;
 
 import java.util.Comparator;
 
