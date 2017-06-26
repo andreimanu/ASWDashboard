@@ -1,4 +1,4 @@
-package es.uniovi.asw;
+package es.uniovi.asw.dashboard;
 
 
 import java.util.Collections;
@@ -20,10 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import es.uniovi.asw.comparator.DateComparator;
 import es.uniovi.asw.comparator.PopularityComparator;
 import es.uniovi.asw.comparator.RatioComparator;
-import es.uniovi.asw.dao.CommentDao;
-import es.uniovi.asw.dao.ProposalDao;
-import es.uniovi.asw.dao.UserDao;
-import es.uniovi.asw.dao.VoteDao;
+import es.uniovi.asw.dashboard.dao.CommentDao;
+import es.uniovi.asw.dashboard.dao.ProposalDao;
+import es.uniovi.asw.dashboard.dao.UserDao;
+import es.uniovi.asw.dashboard.dao.VoteDao;
 import es.uniovi.asw.model.Comment;
 import es.uniovi.asw.model.Proposal;
 import es.uniovi.asw.model.User;
@@ -74,7 +74,7 @@ public class MainController {
     	return "redirect:../showAddProposals";
     }
     @RequestMapping("/deselect/Comm")
-    public String deselectComm(RedirectAttributes request){
+    public String deselectComment(RedirectAttributes request){
     	selectedComment = null;
     	request.addAttribute("id", loggedUser.getId());
     	request.addAttribute("password", loggedUser.getPassword());

@@ -1,4 +1,4 @@
-package es.uniovi.asw.kafka;
+package es.uniovi.asw.dashboard.kafka;
 
 import java.util.HashMap;
 import java.util.Map;

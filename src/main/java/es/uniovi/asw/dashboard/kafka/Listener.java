@@ -1,11 +1,11 @@
-package es.uniovi.asw.kafka;
+package es.uniovi.asw.dashboard.kafka;
 
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import es.uniovi.asw.MainController;
+import es.uniovi.asw.dashboard.MainController;
 
 public class Listener {
 	public final CountDownLatch countDownLatch1 = new CountDownLatch(1);

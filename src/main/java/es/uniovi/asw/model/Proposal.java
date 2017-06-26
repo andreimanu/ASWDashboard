@@ -9,7 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.uniovi.asw.PropReader;
-import es.uniovi.asw.dao.ProposalDao;
+import es.uniovi.asw.dashboard.dao.ProposalDao;
 import es.uniovi.asw.filters.Filter;
 import es.uniovi.asw.model.filtrable.CFiltrable;
 import es.uniovi.asw.model.filtrable.Filtrable;
